@@ -157,7 +157,7 @@ class Trainer:
                         fake = self.netG(self.fixed_noise).detach().cpu()
                     img_grid = vutils.make_grid(fake, padding=2, normalize=True)
                     img_grid = img_grid.numpy().transpose((1,2,0)) * 255
-                    img_grid = cv2.cvtColor(img_grid, cv2.COLOR_RGB2BGR)
+                    img_grid = cv2.cvtColor(img_grid, cv2.COLOR_RGB2BGR).astype('uint8')
                     cv2.imwrite('vis.png', img_grid)
 
                     if self.video_save is not None:

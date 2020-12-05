@@ -148,10 +148,7 @@ class Trainer:
                 if (iters % 10 == 0) or ((epoch == self.num_epochs-1) and (i == len(self.dataloader)-1)):
                     with torch.no_grad():
                         fake = self.netG(self.fixed_noise).detach().cpu()
-                    # img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
                     img_grid = vutils.make_grid(fake, padding=2, normalize=True)
-                    print(img_grid)
-                    print(img_grid.size())
                     img_grid = img_grid.numpy().transpose((1,2,0)) * 255
                     cv2.imwrite('vis.png', img_grid)
 

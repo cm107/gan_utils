@@ -1,0 +1,4 @@
+pylint==2.4.4
+torch
+torchvision
+pyclay-annotation_utils@ https://github.com/cm107/annotation_utils/archive/development.zip

@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: gan-utils
+Version: 0.1
+Summary: GAN testing
+Home-page: https://github.com/cm107/gan_utils
+Author: Clayton Mork
+Author-email: mork.clayton3@gmail.com
+License: MIT License
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown

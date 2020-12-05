@@ -150,7 +150,9 @@ class Trainer:
                         fake = self.netG(self.fixed_noise).detach().cpu()
                     # img_list.append(vutils.make_grid(fake, padding=2, normalize=True))
                     img_grid = vutils.make_grid(fake, padding=2, normalize=True)
-                    img_grid = img_grid.detach().cpu().numpy().transpose((1,2,0))
+                    print(img_grid)
+                    print(img_grid.size())
+                    img_grid = img_grid.numpy().transpose((1,2,0)) * 255
                     cv2.imwrite('vis.png', img_grid)
 
                 iters += 1

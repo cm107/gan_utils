@@ -4,6 +4,9 @@ import torch.nn as nn
 import torch
 import torchvision.utils as vutils
 from tqdm import tqdm
+from typing import cast
+
+from streamer.recorder import Recorder
 
 from ..network.generator import Generator
 from ..network.discriminator import Discriminator
@@ -19,7 +22,7 @@ class Trainer:
         ngpu: int=1,
         nc: int=3, nz: int=100, ngf: int=64, ndf: int=64,
         lr: float=0.0002, beta1: float=0.5,
-        seed: int=None
+        seed: int=None, video_save: str=None
     ):
         """
         ngpu - number of GPUs available. If this is 0, code will run in CPU mode. If this number is greater than 0 it will run on that number of GPUs
@@ -55,6 +58,10 @@ class Trainer:
         self.criterion = get_criterion()
         self.fixed_noise = get_fixed_noise(device=self.device, nz=nz)
         self.nz = nz
+
+        # Video
+        self.video_save = video_save
+        self.recorder = cast(Recorder, None)
 
     def _set_seed(self, seed: int):
         if seed is None:
@@ -153,8 +160,16 @@ class Trainer:
                     img_grid = cv2.cvtColor(img_grid, cv2.COLOR_RGB2BGR)
                     cv2.imwrite('vis.png', img_grid)
 
+                    if self.video_save is not None:
+                        if self.recorder is None:
+                            img_grid_h, img_grid_w = img_grid.shape[:2]
+                            self.recorder = Recorder(output_path=self.video_save, output_dims=(img_grid_w, img_grid_h), fps=5)
+                        self.recorder.write(img_grid)
+
                 iters += 1
                 if pbar is not None:
                     pbar.update()
         if pbar is not None:
             pbar.close()
+        if self.recorder is not None:
+            self.recorder.close()
